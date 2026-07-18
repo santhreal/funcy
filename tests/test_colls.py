@@ -29,6 +29,13 @@ def test_empty_iter():
     assert isinstance(it, Iterator)
     assert list(it) == []
 
+def test_empty_str_bytes():
+    assert empty('') == ''
+    assert empty('abc') == ''
+    assert empty(b'') == b''
+    assert empty(b'abc') == b''
+    assert empty(bytearray(b'abc')) == bytearray()
+
 def test_empty_quirks():
     class A:
         FLAG = 1
