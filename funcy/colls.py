@@ -49,6 +49,9 @@ def empty(coll):
     """Creates an empty collection of the same type."""
     if isinstance(coll, Iterator):
         return iter([])
+    # _factory returns ''.join/b''.join, which cannot be called with zero args.
+    if isinstance(coll, (bytes, str)):
+        return type(coll)()
     return _factory(coll)()
 
 def iteritems(coll):
