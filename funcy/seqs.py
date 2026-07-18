@@ -372,6 +372,9 @@ def _cut_iter(drop_tail, n, step, seq):
 def _cut(drop_tail, n, step, seq=EMPTY):
     if seq is EMPTY:
         step, seq = n, step
+    # step<=0 never advances _cut_iter and hangs; n<=0 is meaningless.
+    if n < 1 or step < 1:
+        raise ValueError('n and step must be >= 1')
     if isinstance(seq, Sequence):
         return _cut_seq(drop_tail, n, step, seq)
     else:
