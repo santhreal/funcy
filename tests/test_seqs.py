@@ -167,13 +167,14 @@ def test_partition():
 
 def test_partition_rejects_non_positive_n_or_step():
     # Zero step never advances the iterator pool and would hang forever.
-    with pytest.raises(ValueError):
-        list(partition(2, 0, iter([1, 2, 3, 4])))
-    with pytest.raises(ValueError):
+    msg = 'n and step must be >= 1'
+    with pytest.raises(ValueError, match=msg):
         lpartition(2, 0, [1, 2, 3, 4])
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match=msg):
+        list(partition(2, 0, iter([1, 2, 3, 4])))
+    with pytest.raises(ValueError, match=msg):
         lpartition(0, [1, 2, 3])
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match=msg):
         list(partition(0, iter([1, 2, 3])))
 
 def test_chunks():
@@ -182,9 +183,12 @@ def test_chunks():
     assert lchunks(3, 1, iter(range(3))) == [[0, 1, 2], [1, 2], [2]]
 
 def test_chunks_rejects_non_positive_n_or_step():
-    with pytest.raises(ValueError):
+    msg = 'n and step must be >= 1'
+    with pytest.raises(ValueError, match=msg):
+        lchunks(2, 0, [1, 2, 3, 4])
+    with pytest.raises(ValueError, match=msg):
         list(chunks(2, 0, iter([1, 2, 3, 4])))
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match=msg):
         lchunks(0, [1, 2, 3])
 
 def test_partition_by():
